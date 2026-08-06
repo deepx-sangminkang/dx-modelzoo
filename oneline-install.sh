@@ -37,7 +37,10 @@ main() {
 
     log "Creating venv at $VENV"
     mkdir -p "$INSTALL_ROOT"
-    if [ ! -d "$VENV" ]; then
+    if [ -d "$VENV" ] && [ ! -x "$VENV/bin/python" ]; then
+        die "$VENV exists but is not a usable venv (missing bin/python) — remove it and re-run: rm -rf '$VENV'"
+    fi
+    if [ ! -e "$VENV/bin/python" ]; then
         python3 -m venv "$VENV" \
             || die "venv creation failed — install it first: sudo apt-get install python3-venv"
     fi
