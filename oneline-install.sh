@@ -16,6 +16,7 @@ VENV="$INSTALL_ROOT/venv-dx-modelzoo"
 EXTRA="${DX_EXTRA:-cpu}"
 
 log() { printf '\033[1;34m[dx-modelzoo]\033[0m %s\n' "$1"; }
+warn() { printf '\033[1;33m[dx-modelzoo][WARN]\033[0m %s\n' "$1" >&2; }
 die() { printf '\033[1;31m[dx-modelzoo][ERROR]\033[0m %s\n' "$1" >&2; exit 1; }
 
 main() {
@@ -37,6 +38,7 @@ main() {
     case "$TAG" in
         ''|*..*|/*|*[!A-Za-z0-9._/-]*) die "invalid DX_VERSION: $TAG" ;;
     esac
+    [ -z "${DX_REF:-}" ] || warn "DX_REF is ignored by dx-modelzoo; installing $TAG (set DX_VERSION to pin a version)"
 
     log "Creating venv at $VENV"
     mkdir -p "$INSTALL_ROOT"
