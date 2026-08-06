@@ -34,6 +34,9 @@ main() {
               | sed -n 's/.*"tag_name"[[:space:]]*:[[:space:]]*"\([^"]*\)".*/\1/p' | head -1)"
         [ -n "$TAG" ] || die "failed to resolve latest release tag (pin with DX_VERSION=vX.Y.Z)"
     fi
+    case "$TAG" in
+        ''|*..*|/*|*[!A-Za-z0-9._/-]*) die "invalid DX_VERSION: $TAG" ;;
+    esac
 
     log "Creating venv at $VENV"
     mkdir -p "$INSTALL_ROOT"
