@@ -42,6 +42,24 @@ cd dx-modelzoo
 pip install -e ".[cpu]"   # or ".[gpu]" for GPU inference
 ```
 
+### Alternative: One-Line Install
+
+To install DX-ModelZoo without cloning the repo:
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/DEEPX-AI/dx-modelzoo/main/oneline-install.sh | sh
+```
+
+This creates an isolated venv at `~/deepx/venv-dx-modelzoo` (override with `DX_INSTALL_DIR=<dir>`) and pip-installs the latest release (pin one with `DX_VERSION=vX.Y.Z`). It defaults to the `cpu` extra — the base package ships **no ONNX Runtime backend at all**, so a plain install without `cpu` or `gpu` can be imported but cannot run inference. Set `DX_EXTRA=gpu` to install the CUDA (`onnxruntime-gpu`) backend instead. The dependency tree (torch, transformers, etc.) is large — expect a ~5 GB download and disk footprint, so don't kill the install partway through on a slow connection.
+
+On a minimal base image, install `build-essential` and `python3-dev` first — a few dependencies (`faster-coco-eval`, `pyclipper`, `shapely`) build native extensions.
+
+Activate the venv afterwards:
+
+```bash
+. ~/deepx/venv-dx-modelzoo/bin/activate
+```
+
 ## Quick Start
 
 ### 1. Set up environment
